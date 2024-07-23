@@ -4,7 +4,6 @@ namespace DNA.Labs.Labs7._02.Services;
 
 public interface ICartService
 {
-    void AddCart(Cart cart);
     Maybe<Cart> GetCart(Guid cartId);
     void AddItem(Item item, Guid cartId);
     void RemoveItem(Item item, Guid cartId);

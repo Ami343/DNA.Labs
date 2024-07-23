@@ -1,3 +1,4 @@
+using DNA.Labs.Labs7._02.Policies;
 using DNA.Labs.Labs7._02.Repositories;
 using DNA.Labs.Labs7._02.SharedKernel;
 
@@ -6,15 +7,12 @@ namespace DNA.Labs.Labs7._02.Services;
 public class CartService : ICartService
 {
     private readonly ICartRepository _cartRepository;
+    private readonly IExtraItemPolicy _extraItemPolicy;
 
-    public CartService()
+    public CartService(ICartRepository cartRepository, IExtraItemPolicy extraItemPolicy)
     {
-        _cartRepository = new CartRepository();
-    }
-
-    public void AddCart(Cart cart)
-    {
-        _cartRepository.InsertCart(cart);
+        _cartRepository = cartRepository;
+        _extraItemPolicy = extraItemPolicy;
     }
 
     public Maybe<Cart> GetCart(Guid cartId)
@@ -26,14 +24,14 @@ public class CartService : ICartService
     {
         var cart = GetCartIfExist(cartId);
         
-        cart.AddItem(item);
+        cart.AddItem(item, _extraItemPolicy);
     }
 
     public void RemoveItem(Item item, Guid cartId)
     {
         var cart = GetCartIfExist(cartId);
         
-        cart.RemoveItem(item);
+        cart.RemoveItem(item, _extraItemPolicy);
     }
 
     public void IntentionallyRemoveFreeItem(Item item, Guid cartId)

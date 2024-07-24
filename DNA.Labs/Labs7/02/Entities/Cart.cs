@@ -7,6 +7,7 @@ namespace DNA.Labs.Labs7._02;
 public class Cart : AggregateRoot
 {
     public Guid Id { get; private set; }
+    
     public ICollection<Item> Items { get; private set; }
     
     public ICollection<Item> FreeItems { get; private set; }
@@ -20,6 +21,7 @@ public class Cart : AggregateRoot
         Id = id;
         Items = new List<Item>();
         FreeItems = new List<Item>();
+        IntentionallyRemovedItems = new List<Item>();
     }
 
     public void AddItem(Item item, IExtraItemPolicy extraItemPolicy)
